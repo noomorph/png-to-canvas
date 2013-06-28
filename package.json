@@ -1,0 +1,19 @@
+{
+  "description": "Png-To-Canvas test",
+  "version": "0.0.2",
+  "author": "noomorph <noomorph@gmail.com>",
+  "dependencies": {
+    "socket.io": "*",
+    "node-static": "*",
+    "socket.io-client": "*",
+    "uglify-js": "*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "subdomain": "xyz",
+  "scripts": {
+    "start": "/server/server.js"
+  },
+  "name": "png-to-canvas-test"
+}

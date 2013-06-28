@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test: using &lt;canvas&gt; tag</title>
+    <style type="text/css">
+        body { text-align: center; }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="speed">Images per second: </label>
+        <input type="text" id="speed" value="N/A" />
+    </div>
+    <hr>
+    <canvas id="canvas" width="888" height="658">
+    </canvas>
+    <script>
+        (function () {
+            function pad(n, width, z) {
+                z = z || '0';
+                n = n + '';
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+
+            var start = new Date();
+            var i = 1, total = 0;
+            var speed = document.getElementById("speed");
+
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var image = new Image();
+
+            function onload() {
+                ctx.drawImage(image, 0, 0);
+                image.src = "video-stream/" + pad(i++, 8) + ".png";
+                speed.value = ((++total) / ((new Date()-start)*0.001)).toFixed(0);
+            }
+
+            function onerror() {
+                i = 1;
+                onload();
+            }
+
+            image.onload = onload;
+            image.onerror = onerror;
+            onload();
+        })()
+    </script>
+</body>
+</html>

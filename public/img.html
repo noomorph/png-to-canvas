@@ -27,19 +27,19 @@
             var img = document.images[0];
             var speed = document.getElementById("speed");
 
-            function refresh() {
+            function onload() {
                 document.images[0].src = "video-stream/" + pad(i++, 8) + ".png";
                 speed.value = ((++total) / ((new Date()-start)*0.001)).toFixed(0);
             }
 
             function onerror() {
                 i = 1;
-                refresh();
+                onload();
             }
 
-            img.onload = refresh;
+            img.onload = onload;
             img.onerror = onerror;
-            refresh();
+            onload();
         })()
     </script>
 </body>

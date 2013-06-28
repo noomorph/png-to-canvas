@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>test: using &lt;img&gt; tag</title>
+	<style type="text/css">
+		body { text-align: center; }
+	</style>
+</head>
+<body>
+	<div>
+		<label for="speed">Images per second: </label>
+		<input type="text" id="speed" value="N/A" />
+	</div>
+	<hr>
+    <img src="" alt="please wait..." />
+    <script>
+        (function () {
+            function pad(n, width, z) {
+                z = z || '0';
+                n = n + '';
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+
+            var start = new Date();
+            var i = 1, total = 0;
+            var img = document.images[0];
+            var speed = document.getElementById("speed");
+
+            function refresh() {
+                document.images[0].src = "video-stream/" + pad(i++, 8) + ".png";
+                speed.value = ((++total) / ((new Date()-start)*0.001)).toFixed(0);
+            }
+
+            function onerror() {
+                i = 1;
+                refresh();
+            }
+
+            img.onload = refresh;
+            img.onerror = onerror;
+            refresh();
+        })()
+    </script>
+</body>
+</html>

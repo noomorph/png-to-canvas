@@ -1,41 +1,49 @@
 (function () {
-    var start = new Date(),
-        i = 0,
-        total = 0;
-    var speed = document.getElementById("speed");
 
-    var canvas = document.getElementById("canvas"), ctx, image;
-    if (canvas) {
-      ctx = canvas.getContext("2d");
-      image = new Image();
-    } else {
-      image = document.images[0];
-    }
+    var i = 0, total = 0, msImage = 0, msCanvas = 0,
+        canvas1 = document.getElementById("canvas1"),
+        ctx = canvas1.getContext("2d"),
+        image1 = document.getElementById("image1"),
+        speedImage = document.getElementById("speed-img-base64"),
+        speedCanvas = document.getElementById("speed-canvas-base64");
 
     var socket = io.connect();
 
-    socket.on('connect', function () {
-      console.log('connected');
-    });
-
-    socket.on('disconnect', function () {
-      console.log('disconnected');
-    });
-
-    socket.on('reconnect', function () {
-      console.log('reconnected');
-    });
-
-    image.onload = function () {
-      if (ctx) {
-        ctx.drawImage(image, 0, 0);
-      }
-      speed.value = ((++total) / ((new Date()-start)*0.001)).toFixed(0);
-      socket.emit('request frame', ++i);
-    };
-
     socket.on('frame', function (base64uri) {
-      image.src = base64uri;
+      var can = 0;
+
+      total += 1;
+
+      function next () {
+        can += 1;
+        if (can === 2) {
+          socket.emit('request frame', ++i);
+          can = 0;
+        }
+      }
+
+      setTimeout(function () {
+        var start = new Date();
+        image1.src = base64uri;
+        image1.onload = function () {
+          msImage += new Date() - start;
+          speedImage.value = (msImage / total).toFixed(0) + "ms";
+          next();
+        };
+      }, 0);
+
+      setTimeout(function () {
+        var start = new Date();
+        var tmp = new Image();
+        tmp.src = base64uri;
+        tmp.onload = function () {
+          ctx.drawImage(tmp, 0, 0, canvas1.width, canvas1.height);
+          msCanvas += new Date() - start;
+          speedCanvas.value = (msCanvas / total).toFixed(0) + "ms";
+          next();
+        };
+      }, 0);
+
     });
 
     socket.emit('request frame', ++i);

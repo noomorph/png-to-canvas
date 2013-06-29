@@ -37,7 +37,6 @@ io.sockets.on('connection', function (socket) {
         var filename = getFramePath(frame);
         fs.readFile(filename, function (err, data) {
             if (err) {
-                console.log(err);
                 if (frame === 1) {
                     throw err;
                 } else {
@@ -45,7 +44,6 @@ io.sockets.on('connection', function (socket) {
                     sendImage(1);
                 }
             } else {
-                console.log(filename);
                 var base64data = new Buffer(data).toString('base64'); 
                 socket.emit('frame', 'data:image/png;base64,' + base64data);
             }
@@ -53,7 +51,6 @@ io.sockets.on('connection', function (socket) {
     }
 
     socket.on('request frame', function (i) {
-        console.log('requesting ' + (i - max));
         sendImage(i - max);
     });
 

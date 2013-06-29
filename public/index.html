@@ -10,12 +10,26 @@
         <input type="text" id="speed-img-base64" value="N/A" />
         <label for="speed-canvas-base64">Canvas (base64):</label>
         <input type="text" id="speed-canvas-base64" value="N/A" />
+        <label for="speed-svg-base64">Svg (base64):</label>
+        <input type="text" id="speed-svg-base64" value="N/A" />
+        <label for="speed-pixel-base64">Canvas putImage (base64):</label>
+        <input type="text" id="speed-pixel-base64" value="N/A" />
     </div>
     <hr>
 
+    <canvas style="border: dotted 1px blue;" id="canvas2" width="888" height="658"></canvas>
     <img id="image1" width="888" height="658"></img>
     <canvas style="border: dashed 1px black;" id="canvas1" width="888" height="658"></canvas>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="888px" height="658px">
+        <image id="image2" width="888px" height="658px"></image>
+    </svg>
+
+    <script type="text/javascript" src="methods/CanvasDrawImage.js"></script>
+    <script type="text/javascript" src="methods/CanvasPutImageData.js"></script>
+    <script type="text/javascript" src="methods/ImgBase64.js"></script>
+    <script type="text/javascript" src="methods/SvgImageBase64.js"></script>
+    <script type="text/javascript" src="Scoreboard.js"></script>
 
     <script src='/socket.io/socket.io.js'></script>
-    <script type="text/javascript" src="socket.js"></script>
+    <script type="text/javascript" src="app.js"></script>
 </body>

@@ -20,6 +20,9 @@ function CanvasPutImageData(pushScore) {
         }
 
         tctx.drawImage(timage, 0, 0);
+        if (window.URL) {
+            window.URL.revokeObjectURL(timage.src);
+        }
         blob = tctx.getImageData(0, 0, width, height);
         ctx2.putImageData(blob, 0, 0);
 
@@ -35,6 +38,10 @@ function CanvasPutImageData(pushScore) {
     this.render = function (base64uri, callback) {
         start = new Date();
         after = callback;
-        timage.src = base64uri;
+        if (window.URL) {
+            timage.src = window.URL.createObjectURL(dataURItoBlob(base64uri));
+        } else {
+            timage.src = base64uri;
+        }
     };
 }

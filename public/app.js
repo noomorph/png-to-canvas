@@ -8,10 +8,12 @@
     scoreboard.register('Image', ImgBase64, document.getElementById("speed-img-base64"));
     scoreboard.register('Canvas.drawImage', CanvasDrawImage, document.getElementById("speed-canvas-base64"));
     scoreboard.register('Canvas.putImageData', CanvasPutImageData, document.getElementById("speed-pixel-base64"));
-    scoreboard.register('Canvas.Blob', CanvasBlob, document.getElementById("speed-canvas-blob"));
+    if (window.URL) {
+        scoreboard.register('Canvas.Blob', CanvasBlob, document.getElementById("speed-canvas-blob"));
+    }
     
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        scoreboard.register('SvgImage', SvgImageBase64, document.getElementById("speed-svg-base64"));
+        scoreboard.register('SvgImage', SvgImageBase64, document.getElementById("speed-svg-blob"));
     }
 
     var socket = io.connect();

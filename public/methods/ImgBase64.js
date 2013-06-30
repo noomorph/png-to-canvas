@@ -4,6 +4,10 @@ function ImgBase64(pushScore) {
         after;
 
     image1.onload = function () {
+        if (window.URL) {
+            window.URL.revokeObjectURL(image1.src);
+        }
+
         pushScore(new Date() - start);
         if (after) {
             after();
@@ -14,6 +18,10 @@ function ImgBase64(pushScore) {
     this.render = function (base64uri, callback) {
         start = new Date();
         after = callback;
-        image1.src = base64uri;
+        if (window.URL) {
+            image1.src = window.URL.createObjectURL(dataURItoBlob(base64uri));
+        } else {
+            image1.src = base64uri;
+        }
     };
 }
